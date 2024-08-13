@@ -1,0 +1,150 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+$primary-color: #d0b3f6;
+$button-color: #d0b3f6;
+$button-hover-color: #a980e8;
+$text-done-color: #d3b9f8;
+$text-color: #6c3479;
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f8f8f8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.task-list {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 599px;
+  height: 427px;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 10px;
+  }
+
+  &__input {
+    width: calc(100% - 40px);
+    height: 40px;
+    padding: 8px;
+    border: 1px solid $text-color;
+    border-radius: 10px;
+    font-size: 14px;
+  }
+
+  &__add-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: $primary-color;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $button-hover-color;
+    }
+  }
+
+  &__content {
+    margin-bottom: 20px;
+  }
+
+  &__counter {
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: $text-color;
+  }
+
+  &__items {
+    height: 100%;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    background-color: white;
+    border: 1px solid #6c3479;
+    color: $text-color;
+    border-radius: 10px;
+    margin-bottom: 10px;
+
+    &--checked {
+      display: flex;
+      align-items: center;
+      background-color: $text-done-color;
+      text-decoration: line-through;
+    }
+  }
+
+  &__text {
+    color: $text-color;
+
+    &--done {
+      color: $text-color;
+      text-decoration: line-through;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+  }
+
+  &__complete-btn,
+  &__delete-btn,
+  &__remove-btn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    margin-left: 10px;
+    color: $text-color;
+
+    &:hover {
+      color: $button-hover-color;
+    }
+  }
+
+  &__footer {
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__delete-done-btn,
+  &__delete-all-btn {
+    background-color: $button-color;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    padding: 8px 12px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $button-hover-color;
+    }
+  }
+}

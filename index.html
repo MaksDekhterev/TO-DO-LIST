@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To do list</title>
+    <link rel="stylesheet" href="./style.css" />
+    <script defer src="./script.js"></script>
+  </head>
+  <body>
+    <div class="task-list">
+      <div class="task-list__header">
+        <input
+          id="input"
+          name="writeInput"
+          type="text"
+          class="task-list__input"
+          placeholder="Add a new task"
+        />
+        <button id="addBtn" class="task-list__add-btn">+</button>
+      </div>
+      <div class="task-list__content">
+        <p class="task-list__counter">
+          Tasks to do - <span id="counter" class="task-list__counter">0</span>
+        </p>
+        <ul id="result" class="task-list__items">
+        </ul>
+      </div>
+      <div class="task-list__footer">
+        <button class="task-list__delete-done-btn">Delete Done</button>
+        <button class="task-list__delete-all-btn">Delete All</button>
+      </div>
+    </div>
+  </body>
+</html>
