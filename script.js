@@ -1,9 +1,11 @@
 const form = document.querySelector(".task-list__header");
-let tasks = [];
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 const result = document.querySelector("#result");
+const counter = document.querySelector("#counter");
 const input = document.querySelector("#input");
+const content = document.querySelector("#content");
 const footer = document.querySelector("#footer");
-const textCounter = document.querySelector(".task-list__counter");
+render();
 
 form.addEventListener("submit", (evt) => {
   evt.preventDefault();
@@ -17,21 +19,20 @@ form.addEventListener("submit", (evt) => {
 });
 
 function render() {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+  counter.textContent = tasks.filter((e) => !e.done).length;
   if (!tasks.length) {
     result.style.display = "none";
+    content.style.display = "none";
+    footer.style.display = "none";
   } else {
     result.style.display = "flex";
-    counter.textContent = tasks.filter((e) => !e.done).length;
+    content.style.display = "block";
+    footer.style.display = "flex";
     result.innerHTML = "";
   }
 
   tasks.forEach((obj) => {
-    const p = document.querySelector("p");
-    input.addEventListener("input", () => {
-      localStorage.setItem("text", input.value)
-      p.textContent = input.value;
-    });
-
     const li = document.createElement("li");
 
     if (obj.done) {
@@ -54,7 +55,8 @@ function render() {
      </button>
      </div>`;
 
-    result.appendChild(li);
+    result.append(li);
+    input.value = "";
 
     li.querySelector("#delete").addEventListener("click", () => {
       tasks = tasks.filter((elem) => elem.id != obj.id);
