@@ -1,11 +1,12 @@
-const form = document.querySelector(".task-list");
+const form = document.querySelector(".task-list__header");
 let tasks = [];
 const result = document.querySelector("#result");
 const input = document.querySelector("#input");
-const addBtn = document.querySelector("#addBtn");
-const counter = document.querySelector("#counter");
+const footer = document.querySelector("#footer");
+const textCounter = document.querySelector(".task-list__counter");
 
-form.addEventListener("submit", (e) => {
+form.addEventListener("submit", (evt) => {
+  evt.preventDefault();
   const task = {
     id: Date.now(),
     text: evt.target.input.value,
@@ -20,112 +21,58 @@ function render() {
     result.style.display = "none";
   } else {
     result.style.display = "flex";
-    counter.textContent = tasks.filter((e) => e.done).length;
+    counter.textContent = tasks.filter((e) => !e.done).length;
     result.innerHTML = "";
-
-    tasks.forEach((e) => {
-      const li = document.createElement("li");
-      li.innerHTML = `<p>${e.text}</p>
-    <div class="task-list__actions">
-    <button id="done" class="task-list__complete-btn">
-      <img src="./src/images/checked.svg" alt="" />
-    </button>;
-    <button id="delete" class="task-list__delete-btn">
-      <img src="./src/images/trash.svg" alt="" />
-    </button>;
-    </div>`;
-      result.appendChild(li);
-    });
   }
+
+  tasks.forEach((obj) => {
+    const p = document.querySelector("p");
+    input.addEventListener("input", () => {
+      localStorage.setItem("text", input.value)
+      p.textContent = input.value;
+    });
+
+    const li = document.createElement("li");
+
+    if (obj.done) {
+      li.className = "task-list__item--checked";
+    } else {
+      li.className = "task-list__item";
+    }
+
+    li.innerHTML = `<p class=${
+      obj.done ? "task-list__text--done" : "task-list__text"
+    } >${obj.text}</p>
+     <div class="task-list__actions">
+     <button id="done" class="task-list__complete-btn">
+      <img src=${
+        obj.done ? "./src/images/krest.svg" : "./src/images/checked.svg"
+      } alt="" />
+     </button>
+     <button id="delete" class="task-list__delete-btn">
+      <img src="./src/images/trash.svg" alt="" />
+     </button>
+     </div>`;
+
+    result.appendChild(li);
+
+    li.querySelector("#delete").addEventListener("click", () => {
+      tasks = tasks.filter((elem) => elem.id != obj.id);
+      render();
+    });
+    li.querySelector("#done").addEventListener("click", () => {
+      const currentTask = tasks.find((elem) => elem.id === obj.id);
+      currentTask.done = !currentTask.done;
+      render();
+    });
+    footer.querySelector("#delDone").addEventListener("click", () => {
+      tasks = tasks.filter((elem) => !elem.done);
+      render();
+    });
+    footer.querySelector("#delAll").addEventListener("click", () => {
+      tasks = [];
+      counter.textContent = 0;
+      render();
+    });
+  });
 }
-
-// function render() {
-//   if (tasks.length) {
-//     wrapper.style.display = "none";
-//   } else wrapper.style.display = "flex";
-
-//   counter.textContent = tasks.filter((e) => e.done).length;
-//   wrapper.innerHTML = "";
-//   tasks.forEach((e) => {
-//     const li = document.createElement("li");
-//     li.innerHTML = `<span>${e.text}</span>
-//     <div class="task-list__actions">
-//     <button id="done" class="task-list__complete-btn">
-//       <img src="./src/images/checked.svg" alt="" />
-//     </button>;
-//     <button id="delete" class="task-list__delete-btn">
-//       <img src="./src/images/trash.svg" alt="" />
-//     </button>;
-//     </div>`;
-//     wrapper.appendChild
-//     (li);
-//     li.querySelector(".task-list__complete-btn").addEventListener(
-//       "click",
-//       () => {
-//         li.style.textDecoration = "line-through";
-//       }
-//     );
-//     li.querySelector(".task-list__delete-btn").addEventListener("click", () => {
-//       li.remove;
-//     });
-//   });
-// }
-
-// form.addEventListener("submit", (evt) => {
-//   const task = {
-//     id: Date.now(),
-//     text: evt.target.writeInput.value,
-//     done: false,
-//   };
-//   tasks.push(task);
-// });
-
-// const input = document.querySelector("#input");
-// const addBtn = document.querySelector("#addBtn");
-// const result = document.querySelector("#result");
-// const counter = document.querySelector("#counter");
-
-// addBtn.addEventListener("click", (e) => {
-//   if (input.value === "") return;
-//   render(input.value);
-//   input.value = "";
-// });
-
-// function render(value) {
-//   console.log(value);
-
-//   const doneImg = document.createElement("img");
-//   doneImg.src = "./src/images/checked.svg";
-
-//   const delImg = document.createElement("img");
-//   delImg.src = "./src/images/trash.svg";
-
-//   const divBtn = document.createElement("div");
-//   const delBtn = document.createElement("button");
-//   const doneBtn = document.createElement("button");
-//   const li = document.createElement("li");
-
-//   li.className = "task-list__item";
-//   li.textContent = value;
-
-//   divBtn.className = "task-list__actions";
-//   li.appendChild(divBtn);
-
-//   doneBtn.className = "task-list__complete-btn";
-//   doneBtn.appendChild(doneImg);
-//   divBtn.appendChild(doneBtn);
-
-//   delBtn.className = "task-list__delete-btn";
-//   delBtn.appendChild(delImg);
-//   divBtn.appendChild(delBtn);
-
-//   doneBtn.addEventListener("click", (e) => {
-//     li.classList.toggle("task-list__item--checked");
-//   });
-
-//   delBtn.addEventListener("click", (e) => {
-//     result.removeChild("li");
-//   });
-
-//   result.appendChild(li);
-// }
